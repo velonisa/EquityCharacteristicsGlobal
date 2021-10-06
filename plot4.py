@@ -9,10 +9,10 @@ import datetime
 # with open('chars_a_rank.feather', 'rb') as f:
 #     charsa = feather.read_feather(f)
 
-with open('chars_q_rank_hkg1990.feather', 'rb') as f:
+with open('chars_q_rank_hkg.feather', 'rb') as f:
     chars = feather.read_feather(f)
 
-with open('chars_q_hkg1990.feather', 'rb') as f:
+with open('chars_q_hkg.feather', 'rb') as f:
     fqsm = feather.read_feather(f)
     
 def wavg(group, avg_name, weight_name):
