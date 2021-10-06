@@ -63,9 +63,9 @@ secd = secd[~secd['isin'].isna()]   # international id
 secd = secd[~secd['sedol'].isna()]   # international id
 secd = secd[~secd['cshoc'].isna()]  # number of common shares
 secd = secd[secd['tpci']=='0']      # issue tyoe code, 0 for equities 
-secd = secd[ (secd['exchg'] == 251)] # Hongkong
+# secd = secd[ (secd['exchg'] == 251)] # Hongkong
 # secd = secd[secd['curcdd']=='HKD']  # currency
-secd = secd[secd['datadate'] >= datetime.datetime.strptime('1990-01-01','%Y-%m-%d').date()]
+secd = secd[secd['datadate'] >= datetime.datetime.strptime('2000-01-01','%Y-%m-%d').date()]
 
 
 # ### calculate me
@@ -129,8 +129,8 @@ with open('fundq_sg.feather', 'rb') as f:
 
 # fundq = fundq[~fundq['isin'].isna()]   # international id
 # fundq = fundq[~fundq['sedol'].isna()]   # international id
-fundq = fundq[fundq['exchg'] == 251] # hongkong
-fundq = fundq[fundq['datadate'] >= datetime.datetime.strptime('1990-01-01','%Y-%m-%d').date()]
+# fundq = fundq[fundq['exchg'] == 251] # hongkong
+fundq = fundq[fundq['datadate'] >= datetime.datetime.strptime('2000-01-01','%Y-%m-%d').date()]
 
 
 fundamental_varlist=[
