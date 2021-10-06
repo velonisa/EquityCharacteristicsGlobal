@@ -55,7 +55,7 @@ from functions import *
 # Read secd data
 
 # secd = pd.read_pickle('./secd_hkg_1990.pkl')
-with open('secd_sg.feather', 'rb') as f:
+with open('secd_hkg.feather', 'rb') as f:
     secd = feather.read_feather(f)
 
 # data cleaning
@@ -119,7 +119,7 @@ secm['retm'] = secm['cumret']/secm['cumret_last_month']-1
 
 # fundq = pd.read_pickle('./fundq_hkg_1990.pkl')
 
-with open('fundq_sg.feather', 'rb') as f:
+with open('fundq_hkg.feather', 'rb') as f:
     fundq = feather.read_feather(f)
 
 
@@ -646,10 +646,10 @@ breakdown = breakdown[['jdate','20%','40%','60%','80%']]
 
 chars = pd.merge(df_rank, breakdown, how='left', on=['jdate'])
 
-with open('chars_q_sg1990.feather', 'wb') as f:
+with open('chars_q_hkg.feather', 'wb') as f:
     feather.write_feather(fqsm, f)
 
-with open('chars_q_rank_sg1990.feather', 'wb') as f:
+with open('chars_q_rank_hkg.feather', 'wb') as f:
     feather.write_feather(df_rank[['gvkey', 'exchg', 'loc', 'retm', 'jdate','date', 'lag_me', 'rank_cp', 'rank_loq',
                                'rank_intanq', 'rank_xsgaq0', 'rank_aoq', 'rank_mibq', 'rank_txdbq', 'rank_ep', 'rank_iby1',
                                 'rank_mb', 'rank_xintq0', 'rank_op', 'rank_ppentq_l4', 'rank_saleq4', 'rank_me', 'rank_actq',
