@@ -59,8 +59,8 @@ with open('secd_hkg.feather', 'rb') as f:
     secd = feather.read_feather(f)
 
 # data cleaning
-secd = secd[~secd['isin'].isna()]   # international id
-secd = secd[~secd['sedol'].isna()]   # international id
+# secd = secd[~secd['isin'].isna()]   # international id
+# secd = secd[~secd['sedol'].isna()]   # international id
 secd = secd[~secd['cshoc'].isna()]  # number of common shares
 secd = secd[secd['tpci']=='0']      # issue tyoe code, 0 for equities 
 # secd = secd[ (secd['exchg'] == 251)] # Hongkong
@@ -77,7 +77,7 @@ secd = secd[secd['datadate'] >= datetime.datetime.strptime('2000-01-01','%Y-%m-%
 
 
 secd['me'] = secd['prccd']*secd['cshoc']
-secd = secd.sort_values(['gvkey','datadate','me','iid','isin','sedol']) # order by gvkey, date, issue id, other id's
+secd = secd.sort_values(['gvkey','datadate','me','iid']) # order by gvkey, date, issue id, other id's
 secd.index = range(len(secd.index))
 
 
@@ -88,7 +88,7 @@ secd['prc_trfd_last_day'] = secd.groupby(['gvkey'])['prc_trfd'].shift(1)
 secd['ret'] = secd['prc_trfd']/secd['prc_trfd_last_day']-1
 # secd.columns
 
-varlist=['gvkey', 'exchg','tpci', 'prcstd', 'loc','fic', 'iid','sedol', 'isin','datadate', 'cshoc','conm','monthend','curcdd', 'prccd','prc_trfd','prc_trfd_last_day','ajexdi','trfd','prc_adj','me','ret']
+varlist=['gvkey', 'exchg','tpci', 'prcstd', 'loc','fic', 'iid', 'datadate', 'cshoc','conm','monthend','curcdd', 'prccd','prc_trfd','prc_trfd_last_day','ajexdi','trfd','prc_adj','me','ret']
 secd = secd[varlist]
 
 # returns
@@ -135,7 +135,7 @@ fundq = fundq[fundq['datadate'] >= datetime.datetime.strptime('2000-01-01','%Y-%
 
 fundamental_varlist=[
     # id
-    'gvkey', 'indfmt', 'consol', 'popsrc', 'datafmt','exchg', 'loc','fic', 'sedol', 'isin','datadate','pdateq','fdateq','fyr',
+    'gvkey', 'indfmt', 'consol', 'popsrc', 'datafmt','exchg', 'loc','fic', 'datadate','pdateq','fdateq','fyr',
     # varaibles we want 
     'ibq','iby',
     'seqq','txdbq','txtq','pstkq','dpy','dpq','atq',
@@ -156,7 +156,7 @@ fundq = fundq[fundamental_varlist]
 
 
 
-fundq = fundq.sort_values(['gvkey','datadate','exchg','isin','sedol','seqq'])
+fundq = fundq.sort_values(['gvkey','datadate','exchg','seqq'])
 
 
 
@@ -205,18 +205,18 @@ fundq['datadate'] = pd.to_datetime(fundq['datadate'])
 # 3 month is enough for the reporting process
 # thus, we don't have forseeing-data problem
 fundq['jdate'] = fundq['datadate'] + MonthEnd(3)
-fundq = fundq.sort_values(['gvkey','datadate','exchg','isin','sedol'])
+fundq = fundq.sort_values(['gvkey','datadate','exchg'])
 
 
 
 secm['datadate'] = pd.to_datetime(secm['datadate'])
 secm['jdate'] = secm['datadate'] + MonthEnd(0)
-secm = secm.sort_values(['gvkey','datadate','exchg','isin','sedol'])
-secm = secm[['gvkey', 'exchg', 'loc', 'fic', 'iid', 'sedol', 'isin', 'datadate', 
+secm = secm.sort_values(['gvkey','datadate','exchg'])
+secm = secm[['gvkey', 'exchg', 'loc', 'fic', 'iid', 'datadate', 
              'cshoc', 'prccd', 'me', 'retm', 'jdate']]
 
 
-fqsm = pd.merge(secm, fundq, how='left', on=['gvkey','jdate','exchg','isin','sedol','loc','fic'])
+fqsm = pd.merge(secm, fundq, how='left', on=['gvkey','jdate','exchg','loc','fic'])
 # fqsm = pd.merge(secm, fundq, how='inner', on=['gvkey','jdate','exchg','isin','sedol','loc','fic'])
 
 
@@ -226,7 +226,7 @@ fqsm = pd.merge(secm, fundq, how='left', on=['gvkey','jdate','exchg','isin','sed
 # fqsm.columns
 
 
-fqsm.columns = ['gvkey', 'exchg', 'loc', 'fic', 'iid', 'sedol', 'isin', 'datadate_secm',
+fqsm.columns = ['gvkey', 'exchg', 'loc', 'fic', 'iid', 'datadate_secm',
        'cshoc', 'prccd', 'me', 'retm', 'jdate', 'indfmt', 'consol', 'popsrc',
        'datafmt', 'datadate_fundq', 'pdateq', 'fdateq', 'fyr', 'ibq', 'iby',
        'seqq', 'txdbq', 'txtq', 'pstkq', 'dpy', 'dpq','atq', 'cheq','actq','gdwlq','intanq','ceqq',
@@ -235,7 +235,7 @@ fqsm.columns = ['gvkey', 'exchg', 'loc', 'fic', 'iid', 'sedol', 'isin', 'datadat
 
 
 
-fqsm = fqsm.sort_values(['gvkey','jdate','isin','sedol']) # order by gvkey, date, issue id, other id's
+fqsm = fqsm.sort_values(['gvkey','jdate']) # order by gvkey, date, issue id, other id's
 
 
 
@@ -604,7 +604,7 @@ fqsm = fqsm.groupby(['gvkey','jdate'], as_index=False).fillna(method='ffill')
 def standardize(df):
     # exclude the the information columns
     col_names = df.columns.values.tolist()
-    list_to_remove = ['gvkey', 'exchg', 'loc', 'fic', 'iid', 'sedol', 'isin',
+    list_to_remove = ['gvkey', 'exchg', 'loc', 'fic', 'iid',
        'datadate_secm','retm', 'jdate', 'indfmt',
        'consol', 'popsrc', 'datafmt', 'datadate_fundq', 'pdateq',
        'fdateq', 'permno', 'jdate', 'date', 'datadate', 'sic', 'count', 'exchcd', 'shrcd', 'ffi49', 'ret',
