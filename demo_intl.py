@@ -599,7 +599,11 @@ from tqdm import tqdm
 
 fqsm['date'] = fqsm.groupby(['gvkey'])['jdate'].shift(-1)
 
-fqsm = fqsm.groupby(['gvkey','jdate'], as_index=False).fillna(method='ffill')
+fqsm['datadate'] = fqsm.groupby(['gvkey'])['datadate_secm'].fillna(method='ffill')
+fqsm[['gvkey1', 'datadate1']] = fqsm[['gvkey', 'datadate']]  # avoid the bug of 'groupby' for py 3.8
+fqsm = fqsm.groupby(['gvkey1', 'datadate1'], as_index=False).fillna(method='ffill')
+
+# fqsm = fqsm.groupby(['gvkey','datadate_secm'], as_index=False).fillna(method='ffill')
 
 def standardize(df):
     # exclude the the information columns
@@ -639,12 +643,12 @@ df_rank = standardize(df_rank)
 
 
 
-breakdown = df_rank.groupby(['jdate'])['rank_me'].describe(percentiles=[0.2,0.4,0.6,0.8]).reset_index()
-breakdown = breakdown[['jdate','20%','40%','60%','80%']]
+# breakdown = df_rank.groupby(['jdate'])['rank_me'].describe(percentiles=[0.2,0.4,0.6,0.8]).reset_index()
+# breakdown = breakdown[['jdate','20%','40%','60%','80%']]
 
 
 
-chars = pd.merge(df_rank, breakdown, how='left', on=['jdate'])
+# chars = pd.merge(df_rank, breakdown, how='left', on=['jdate'])
 
 with open('chars_q_hkg.feather', 'wb') as f:
     feather.write_feather(fqsm, f)
