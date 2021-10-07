@@ -667,7 +667,7 @@ with open('chars_q_rank_hkg.feather', 'wb') as f:
                                 'rank_lcoq', 'rank_cheq', 'rank_cashdebt', 'rank_txtq_l4', 'rank_beq_l4', 'rank_ppentq', 'rank_atq', 
                                 'rank_mom1m', 'rank_saleq4_l1', 'rank_pm', 'rank_acoq_l4', 'rank_beq', 'rank_oiadpq', 'rank_chtx', 
                                 'rank_dlcq', 'rank_atq_l1', 'rank_pctacc', 'rank_fyr', 'rank_acc', 'rank_lgr', 'rank_noa', 'rank_grltnoa', 
-                                'rank_roa', 'rank_saley', 'rank_ibq4_l1', 'rank_earnings', 'rank_bm', 'rank_gma']], f)
+                                'rank_roa', 'rank_saley', 'rank_ibq4_l1', 'rank_earnings', 'rank_bm', 'rank_gma', 'rank_me']], f)
 
 '''
 #########anual chars#########
