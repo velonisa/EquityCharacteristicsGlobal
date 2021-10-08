@@ -601,7 +601,7 @@ fqsm['date'] = fqsm.groupby(['gvkey'])['jdate'].shift(-1)
 
 fqsm['datadate'] = fqsm.groupby(['gvkey'])['datadate_secm'].fillna(method='ffill')
 fqsm[['gvkey1', 'datadate1']] = fqsm[['gvkey', 'datadate']]  # avoid the bug of 'groupby' for py 3.8
-fqsm = fqsm.groupby(['gvkey1', 'datadate1'], as_index=False).fillna(method='ffill')
+fqsm = fqsm.groupby(['gvkey1'], as_index=False).fillna(method='ffill')
 
 # fqsm = fqsm.groupby(['gvkey','datadate_secm'], as_index=False).fillna(method='ffill')
 
@@ -653,25 +653,28 @@ df_rank = standardize(df_rank)
 with open('chars_q_hkg.feather', 'wb') as f:
     feather.write_feather(fqsm, f)
 
+# with open('chars_q_rank_hkg.feather', 'wb') as f:
+#     feather.write_feather(df_rank[['gvkey', 'exchg', 'loc', 'retm', 'jdate','date', 'lag_me', 'rank_cp', 'rank_loq',
+#                                'rank_intanq', 'rank_xsgaq0', 'rank_aoq', 'rank_mibq', 'rank_txdbq', 'rank_ep', 'rank_iby1',
+#                                 'rank_mb', 'rank_xintq0', 'rank_op', 'rank_ppentq_l4', 'rank_saleq4', 'rank_me', 'rank_actq',
+#                                 'rank_ato', 'rank_ltq', 'rank_saleq_l1', 'rank_prccd', 'rank_mom60m', 'rank_saleq4_l4',
+#                                 'rank_cogsq', 'rank_xintq', 'rank_gdwlq', 'rank_invtq_l4', 'rank_ppentq_l3', 'rank_iby',
+#                                 'rank_xsgaq', 'rank_sp', 'rank_sgr', 'rank_revtq4', 'rank_seqq', 'rank_alm', 'rank_cinvest',
+#                                 'rank_txtq', 'rank_cf', 'rank_saleq', 'rank_ivaoq', 'rank_rna', 'rank_rectq_l4',
+#                                 'rank_saleq_l2', 'rank_cash', 'rank_apq_l4', 'rank_pe', 'rank_pstkq', 'rank_revtq',
+#                                 'rank_dpy', 'rank_ltq_l4', 'rank_roe', 'rank_apq', 'rank_rectq', 'rank_mom12m',
+#                                 'rank_lcoq_l4', 'rank_lev', 'rank_depr', 'rank_cshoc', 'rank_ppentq_l1', 
+#                                 'rank_loq_l4', 'rank_cogsq4', 'rank_oancfy', 'rank_saleq_l3', 'rank_dpq', 
+#                                 'rank_ceqq_l1', 'rank_chpm', 'rank_ppentq_l2', 'rank_noa_l4', 'rank_agr', 'rank_acoq', 
+#                                 'rank_mom6m', 'rank_seas1a', 'rank_saleq_l4', 'rank_dlttq', 'rank_atq_l4', 'rank_ceqq', 
+#                                 'rank_rsup', 'rank_invtq', 'rank_nincr', 'rank_mom36m', 'rank_ibq', 'rank_ibq4', 'rank_ala', 
+#                                 'rank_lcoq', 'rank_cheq', 'rank_cashdebt', 'rank_txtq_l4', 'rank_beq_l4', 'rank_ppentq', 'rank_atq', 
+#                                 'rank_mom1m', 'rank_saleq4_l1', 'rank_pm', 'rank_acoq_l4', 'rank_beq', 'rank_oiadpq', 'rank_chtx', 
+#                                 'rank_dlcq', 'rank_atq_l1', 'rank_pctacc', 'rank_fyr', 'rank_acc', 'rank_lgr', 'rank_noa', 'rank_grltnoa', 
+#                                 'rank_roa', 'rank_saley', 'rank_ibq4_l1', 'rank_earnings', 'rank_bm', 'rank_gma', 'rank_me']], f)
+
 with open('chars_q_rank_hkg.feather', 'wb') as f:
-    feather.write_feather(df_rank[['gvkey', 'exchg', 'loc', 'retm', 'jdate','date', 'lag_me', 'rank_cp', 'rank_loq',
-                               'rank_intanq', 'rank_xsgaq0', 'rank_aoq', 'rank_mibq', 'rank_txdbq', 'rank_ep', 'rank_iby1',
-                                'rank_mb', 'rank_xintq0', 'rank_op', 'rank_ppentq_l4', 'rank_saleq4', 'rank_me', 'rank_actq',
-                                'rank_ato', 'rank_ltq', 'rank_saleq_l1', 'rank_prccd', 'rank_mom60m', 'rank_saleq4_l4',
-                                'rank_cogsq', 'rank_xintq', 'rank_gdwlq', 'rank_invtq_l4', 'rank_ppentq_l3', 'rank_iby',
-                                'rank_xsgaq', 'rank_sp', 'rank_sgr', 'rank_revtq4', 'rank_seqq', 'rank_alm', 'rank_cinvest',
-                                'rank_txtq', 'rank_cf', 'rank_saleq', 'rank_ivaoq', 'rank_rna', 'rank_rectq_l4',
-                                'rank_saleq_l2', 'rank_cash', 'rank_apq_l4', 'rank_pe', 'rank_pstkq', 'rank_revtq',
-                                'rank_dpy', 'rank_ltq_l4', 'rank_roe', 'rank_apq', 'rank_rectq', 'rank_mom12m',
-                                'rank_lcoq_l4', 'rank_lev', 'rank_depr', 'rank_cshoc', 'rank_ppentq_l1', 
-                                'rank_loq_l4', 'rank_cogsq4', 'rank_oancfy', 'rank_saleq_l3', 'rank_dpq', 
-                                'rank_ceqq_l1', 'rank_chpm', 'rank_ppentq_l2', 'rank_noa_l4', 'rank_agr', 'rank_acoq', 
-                                'rank_mom6m', 'rank_seas1a', 'rank_saleq_l4', 'rank_dlttq', 'rank_atq_l4', 'rank_ceqq', 
-                                'rank_rsup', 'rank_invtq', 'rank_nincr', 'rank_mom36m', 'rank_ibq', 'rank_ibq4', 'rank_ala', 
-                                'rank_lcoq', 'rank_cheq', 'rank_cashdebt', 'rank_txtq_l4', 'rank_beq_l4', 'rank_ppentq', 'rank_atq', 
-                                'rank_mom1m', 'rank_saleq4_l1', 'rank_pm', 'rank_acoq_l4', 'rank_beq', 'rank_oiadpq', 'rank_chtx', 
-                                'rank_dlcq', 'rank_atq_l1', 'rank_pctacc', 'rank_fyr', 'rank_acc', 'rank_lgr', 'rank_noa', 'rank_grltnoa', 
-                                'rank_roa', 'rank_saley', 'rank_ibq4_l1', 'rank_earnings', 'rank_bm', 'rank_gma', 'rank_me']], f)
+    feather.write_feather(df_rank,f)
 
 '''
 #########anual chars#########

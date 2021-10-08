@@ -83,7 +83,6 @@ def plot4_q(col,chars,fqsm):
     # figure 4
     #
     plt.subplot(224)
-
     plt.plot(temp1['jdate'], temp1['%s'%col],label='char')
     plt.plot(temp1['jdate'], temp1['gvkey'],label='market')
     plt.title('firm numbers')
@@ -99,7 +98,7 @@ def plot4_q(col,chars,fqsm):
 plotlist_q = ['bm', 'ep', 'cp', 'agr', 'alm', 'ato', 'cash', 'cashdebt', 
               'chpm', 'chtx', 'cinvest', 'depr', 'gma', 'grltnoa', 'lev',
               'lgr', 'nincr', 'noa', 'op', 'mom12m', 'mom36m', 'mom60m', 
-              'mom6m', 'mom1m', 'sgr', 'rna', 'roa', 'roe', 'rsup', 'seas1a', 'sp', 'acc', 'pctacc', 'pm']
+              'mom6m', 'mom1m', 'sgr', 'rna', 'roa', 'roe', 'rsup', 'seas1a', 'sp', 'acc', 'pctacc', 'pm','me']
 for char in plotlist_q:
     plot4_q(char,chars,fqsm)
 
