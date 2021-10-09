@@ -217,7 +217,7 @@ secm = secm[['gvkey', 'exchg', 'loc', 'fic', 'iid', 'datadate',
 
 
 fqsm = pd.merge(secm, fundq, how='left', on=['gvkey','jdate','exchg','loc','fic'])
-# fqsm = pd.merge(secm, fundq, how='inner', on=['gvkey','jdate','exchg','isin','sedol','loc','fic'])
+# fqsm = pd.merge(secm, fundq, how='right', on=['gvkey','jdate','exchg','loc','fic'])
 
 
 # # Forward Fill the Fundq info to Empty Month
