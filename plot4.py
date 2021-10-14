@@ -55,7 +55,6 @@ def plot4_q(col,chars,fqsm):
     mkt = plt.plot(vwmkt['jdate'], (vwmkt[0]+1).cumprod(), label='mkt')
     plt.title('Cumulative Return: %s_q'%col)
     plt.legend()
-    
     # figure 2
     # plt.figure(132)
     plt.subplot(222)
@@ -66,8 +65,7 @@ def plot4_q(col,chars,fqsm):
     plt.bar('port5',vwret[vwret['char_port']==5]['vwret'].mean(),label='port5')
     plt.bar('mkt',vwret['vwret'].mean())
     plt.title('Average Return: %s_q'%col)
-    
-     # figure 3
+    # figure 3
     # plt.figure(133)
     plt.subplot(223)
     plt.plot(chars[(chars['jdate'].dt.year>2000) & (chars['jdate'].dt.year<=2021)][chars['char_port']==1].groupby(['jdate'])['rank_%s'%col].count(),label='port1')
