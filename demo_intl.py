@@ -582,6 +582,7 @@ fqsm['datadate_secm'] = fqsm.groupby(['gvkey'])['datadate_secm'].fillna(method='
 fqsm[['gvkey1', 'datadate1']] = fqsm[['gvkey', 'datadate_secm']]  # avoid the bug of 'groupby' for py 3.8
 fqsm = fqsm.groupby(['gvkey1','datadate1'], as_index=False).fillna(method='ffill')
 
+fqsm = fqsm.rename(columns={"retm_x": "retm"})
 ###momentum####
 def mom(start, end, df):
     """
